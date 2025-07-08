@@ -45,6 +45,25 @@ const renderApp = () => {
     );
 };
 
+const migrateLocalStorage = () => {
+    const defaultSettings = [
+        { key: 'rmg-runtime__allowAnalytics', value: 'true' },
+        { key: 'rmg-runtime__language', value: 'zh-Hans' }
+    ];
+    defaultSettings.forEach(({ key, value }) => {
+        if (!localStorage.getItem(key)) {
+            localStorage.setItem(key, value);
+        }
+    });
+    
+    ['rmp__param', 'rmp__param__backup'].forEach(key => {
+        localStorage.removeItem(key);
+    });
+    
+};
+
+migrateLocalStorage();
+
 // Load localstorage first or they will be overwritten after first store.dispatch.
 // A change in redux store will trigger the store.subscribe and will write states.
 const loginState = JSON.parse(localStorage.getItem(LocalStorageKey.LOGIN_STATE) ?? '{}');
