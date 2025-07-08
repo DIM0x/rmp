@@ -1,62 +1,30 @@
-name: Build and Release
+name: Deploy to GitHub Pages
 
 on:
-  workflow_dispatch:
-    inputs:
-      auto_deploy:
-        type: choice
-        description: Auto deploy to (NONE/UAT/PRD)
-        options:
-        - PRD
-        - UAT
-        - NONE
-        default: NONE
-        required: true
-      bump_version:
-        type: choice
-        description: Bump version
-        options:
-        - patch
-        - minor
-        - major
-        default: patch
-        required: true
+  push:
+    branches: [ main ]  # 触发分支
 
 jobs:
-  build:
-
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '22'
-      - run: npm ci
-      - run: npm i rollup
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-      - name: Optimize SVGs in public/images/facilities
-        working-directory: public/images/facilities
-        run: |
-          npm i -g svgo
-          svgo -v
-          svgo -f ./ --pretty --indent 2 --config ./svgo.config.js
-        # changes should be made before build.sh as they will be committed in build.sh
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
 
-      - name: Build
-        id: build
-        run: ./scripts/build.sh
-        shell: bash
-        env:
-          BUMP_VERSION: ${{ inputs.bump_version }}
+    - name: Install dependencies
+      run: npm ci
 
-      - name: Release
-        if: ${{ inputs.auto_deploy == 'UAT' || inputs.auto_deploy == 'PRD' }}
-        uses: railmapgen/releaser@main
-        with:
-          app_name: rmp
-          version: ${{ steps.build.outputs.RMG_VER }}
-          environment: ${{ inputs.auto_deploy }}
-          dist: dist
-          github_token: ${{ secrets.RMG_BUILD_AND_RELEASE }}
-          gitlab_token: ${{ secrets.GITLAB_RELEASE }}
+    - name: Build project
+      run: npm run build
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./dist  # 编译后的目录
