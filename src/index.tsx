@@ -48,8 +48,7 @@ const renderApp = () => {
 const migrateLocalStorage = () => {
     const defaultSettings = [
         { key: 'rmg-runtime__allowAnalytics', value: 'true' },
-        { key: 'rmg-runtime__language', value: 'zh-Hans' },
-        { key: 'rmp__doNotShowRMTMsg', value: 'true' }
+        { key: 'rmg-runtime__language', value: 'zh-Hans' }
     ];
     defaultSettings.forEach(({ key, value }) => {
         if (!localStorage.getItem(key)) {
