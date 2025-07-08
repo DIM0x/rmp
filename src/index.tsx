@@ -61,6 +61,25 @@ const migrateLocalStorage = () => {
         localStorage.removeItem(key);
     });
     
+    const defaultAppConfig = {
+        telemetry: { app: true, project: true },
+        preference: {
+            unlockSimplePathAttempts: 3,
+            toolsPanel: { expand: false },
+            autoParallel: true,
+            randomStationsNames: "none",
+            gridLines: false,
+            snapLines: true
+        }
+    };
+    
+    const appKey = LocalStorageKey.APP;
+    const existingAppConfig = localStorage.getItem(appKey);
+    if (!existingAppConfig || existingAppConfig.trim() === '{}') {
+        localStorage.setItem(appKey, JSON.stringify(defaultAppConfig));
+        console.log('Added default app configuration');
+    }
+
 };
 
 migrateLocalStorage();
