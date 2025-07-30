@@ -49,18 +49,18 @@ const migrateLocalStorage = () => {
     const defaultSettings = [
         { key: 'rmg-runtime__allowAnalytics', value: 'true' },
         { key: 'rmg-runtime__language', value: 'zh-Hans' },
-        { key: 'rmp__doNotShowRMTMsg', value: 'true' }
+        { key: 'rmp__doNotShowRMTMsg', value: 'true' },
     ];
     defaultSettings.forEach(({ key, value }) => {
         if (!localStorage.getItem(key)) {
             localStorage.setItem(key, value);
         }
     });
-    
+
     ['rmp__param', 'rmp__param__backup'].forEach(key => {
         localStorage.removeItem(key);
     });
-    
+
     const defaultAppConfig = {
         telemetry: { app: true, project: true },
         preference: {

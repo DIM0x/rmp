@@ -124,9 +124,9 @@ const SvgCanvas = () => {
 
         setActiveSnapLines([]);
         setActiveSnapPoint(undefined);
-//        setPointerPosition({ x, y });
+        //setPointerPosition({ x, y });
 
-//        dispatch(setActive(node));
+        //dispatch(setActive(node));
 
         if (!e.shiftKey) {
             // no shift key -> non multiple selection case
@@ -289,7 +289,7 @@ const SvgCanvas = () => {
             dispatch(refreshNodesThunk());
             dispatch(refreshEdgesThunk());
         } else  */
-		if (mode.startsWith('line')) {
+        if (mode.startsWith('line')) {
             setPointerOffset({
                 dx: ((pointerPosition!.x - x) * svgViewBoxZoom) / 100,
                 dy: ((pointerPosition!.y - y) * svgViewBoxZoom) / 100,
@@ -342,7 +342,7 @@ const SvgCanvas = () => {
         setActiveSnapLines([]);
         setActiveSnapPoint(undefined);
         setPointerPosition(undefined);
-//        dispatch(setActive(undefined));
+        //dispatch(setActive(undefined));
         // console.log('up ', graph.current.getNodeAttributes(node));
     });
     const handleEdgePointerDown = useEvent((edge: LineId, e: React.PointerEvent<SVGElement>) => {

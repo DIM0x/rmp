@@ -44,9 +44,9 @@ export const NodeSpecificAttributes = () => {
 
     return (
         <>
-			<div style={{
+            <div style={{
               pointerEvents: 'none',
-			  cursor: 'not-allowed',
+              cursor: 'not-allowed',
             }}>
             {AttrsComponent ? (
                 <AttrsComponent id={id} attrs={attrs} handleAttrsUpdate={handleAttrsUpdate} />
@@ -55,7 +55,7 @@ export const NodeSpecificAttributes = () => {
                     {t('panel.details.unknown.error', { category: t('panel.details.unknown.node') })}
                 </Text>
             )}
-			</div>
+            </div>
 
             {imageIndices.filter(i => !missingImages.has(i)).length > 0 && (
                 <Box mt={4}>
@@ -67,7 +67,7 @@ export const NodeSpecificAttributes = () => {
                         {imageIndices.map(
                             index => (
                             !missingImages.has(index) && (
-                                <Box 
+                                <Box
                                     key={index}
                                     position="relative"
                                     cursor="pointer" // 鼠标指针变为手型提示可点击

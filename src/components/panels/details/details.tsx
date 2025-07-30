@@ -80,7 +80,7 @@ const DetailsPanel = () => {
 
                 {selected.size === 1 && graph.current.hasEdge(selectedFirst) && <LineExtremitiesSection />}
                 <InfoSection />
-				{/*
+                {/*
                 {selected.size === 1 && graph.current.hasNode(selectedFirst) && <NodePositionSection />}
                 */}
             </RmgSidePanelBody>
