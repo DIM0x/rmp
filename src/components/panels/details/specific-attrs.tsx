@@ -1,4 +1,6 @@
-import { Text } from '@chakra-ui/react';
+import React from 'react';
+import { Box, Text, Heading } from '@chakra-ui/react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useTranslation } from 'react-i18next';
 import { AttrsProps, MiscNodeId, StnId } from '../../../constants/constants';
 import { useRootDispatch, useRootSelector } from '../../../redux';
@@ -16,6 +18,7 @@ export const NodeSpecificAttributes = () => {
     const { selected } = useRootSelector(state => state.runtime);
     const { t } = useTranslation();
     const [id] = selected;
+    const [missingImages, setMissingImages] = React.useState<Set<number>>(new Set());
 
     const type = window.graph.getNodeAttribute(id, 'type');
     const AttrsComponent = type in nodes && (nodes[type].attrsComponent as React.FC<AttrsProps<any>>);
@@ -28,12 +31,62 @@ export const NodeSpecificAttributes = () => {
         dispatch(saveGraph(window.graph.export()));
     };
 
-    return AttrsComponent ? (
-        <AttrsComponent id={id} attrs={attrs} handleAttrsUpdate={handleAttrsUpdate} />
-    ) : (
-        <Text fontSize="xs" m="var(--chakra-space-1)">
-            {t('panel.details.unknown.error', { category: t('panel.details.unknown.node') })}
-        </Text>
+    const handleImageClick = (imageUrl: string) => {
+        window.open(imageUrl, '_blank');
+    };
+    const handleImageError = (index: number) => {
+        setMissingImages(prev => new Set(prev).add(index));
+    };
+    const imageIndices = Array.from({ length: 10 }, (_, i) => i + 1);
+
+    return (
+        <>
+            {AttrsComponent ? (
+                <AttrsComponent id={id} attrs={attrs} handleAttrsUpdate={handleAttrsUpdate} />
+            ) : (
+                <Text fontSize="xs" m="var(--chakra-space-1)">
+                    {t('panel.details.unknown.error', { category: t('panel.details.unknown.node') })}
+                </Text>
+            )}
+
+            {imageIndices.filter(i => !missingImages.has(i)).length > 0 && (
+                <Box mt={4}>
+                    <Heading as="h5" size="sm">
+                        {t('panel.details.stationPhotos')}
+                    </Heading>
+
+                    <Box display="flex" flexDirection="column" gap={2}>
+                        {imageIndices.map(index => (
+                            !missingImages.has(index) && (
+                                <Box 
+                                    key={index}
+                                    position="relative"
+                                    cursor="pointer" // 鼠标指针变为手型提示可点击
+                                    _hover={{ opacity: 0.8 }} // 悬停效果
+                                >
+                                    <LazyLoadImage
+                                        src={`stationpics/${id}/${index}.jpg`}
+                                        alt={`Stationpics ${index}`}
+                                        width="100%" // 宽度占满侧边栏
+                                        height="auto" // 高度自适应保持比例
+                                        onClick={() => handleImageClick(
+                                            `stationpics/${id}/${index}.jpg`
+                                        )}
+                                        onError={() => handleImageError(index)} // 加载失败时标记为缺失
+                                        style={{
+                                            aspectRatio: '16/9', // 强制 16:9 宽高比
+                                            objectFit: 'cover', // 裁剪多余部分保持比例
+                                            borderRadius: 'md', // 圆角
+                                            boxShadow: 'sm' // 阴影
+                                        }}
+                                    />
+                                </Box>
+                            )
+                        ))}
+                    </Box>
+				</Box>
+	        )}
+        </>
     );
 };
 

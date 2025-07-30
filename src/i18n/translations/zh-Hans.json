@@ -24,6 +24,7 @@
             }
         },
         "details": {
+			"stationPhotos": "站点照片",
             "header": "详情",
             "info": {
                 "title": "基本信息",
