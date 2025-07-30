@@ -9,7 +9,7 @@ import zhHantTranslation from './translations/zh-Hant.json';
 
 const i18n = new rmgRuntime.I18nBuilder()
     .use(initReactI18next)
-    .withAppName('Rail Map Painter')
+    .withAppName('可可西里铁路线路图')
     .withLng(rmgRuntime.getLanguage())
     .withDefaultResource(defaultTranslation)
     .withResource('en', enTranslation)

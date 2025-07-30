@@ -220,7 +220,7 @@ const SvgWrapper = () => {
             const x_factor = e.key.endsWith('Left') ? -1 : e.key.endsWith('Right') ? 1 : 0;
             const y_factor = e.key.endsWith('Up') ? -1 : e.key.endsWith('Down') ? 1 : 0;
             dispatch(setSvgViewBoxMin(pointerPosToSVGCoord(d * x_factor, d * y_factor, svgViewBoxZoom, svgViewBoxMin)));
-        } else if (e.key === 'i' || e.key === 'j' || e.key === 'k' || e.key === 'l') {
+/*         } else if (e.key === 'i' || e.key === 'j' || e.key === 'k' || e.key === 'l') {
             const d = 10;
             const x_factor = (e.key === 'j' ? -1 : e.key === 'l' ? 1 : 0) * d;
             const y_factor = (e.key === 'i' ? -1 : e.key === 'k' ? 1 : 0) * d;
@@ -234,7 +234,7 @@ const SvgWrapper = () => {
                 });
             }
         } else if (e.key === 'f' && lastTool) {
-            dispatch(setMode(lastTool as RuntimeMode));
+            dispatch(setMode(lastTool as RuntimeMode)); */
         } else if (e.key === 'z' && (isMacClient ? e.metaKey && !e.shiftKey : e.ctrlKey)) {
             if (isMacClient) e.preventDefault(); // Cmd Z will step backward in safari and chrome
             dispatch(undoAction());
@@ -345,7 +345,7 @@ const SvgWrapper = () => {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             id="canvas"
-            style={{ position: 'fixed', top: 40, left: 40, userSelect: 'none', touchAction: 'none' }}
+            style={{ position: 'fixed', top: 40, userSelect: 'none', touchAction: 'none' }}
             height={height}
             width={width}
             viewBox={`${svgViewBoxMin.x} ${svgViewBoxMin.y} ${(width * svgViewBoxZoom) / 100} ${

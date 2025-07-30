@@ -81,7 +81,7 @@ export const calculateCanvasSize = (graph: MultiDirectedGraph<NodeAttributes, Ed
  * Return the canvas size with some margin for header and tools.
  */
 export const getCanvasSize = (size: Size) => ({
-    width: (size.width ?? 720) - 40,
+    width: size.width ?? 720,
     height: (size.height ?? 1280) - 40,
 });
 

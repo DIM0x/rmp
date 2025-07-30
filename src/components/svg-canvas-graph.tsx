@@ -95,7 +95,7 @@ const SvgCanvas = () => {
     // note only the nearest 2 of them will be drawn
     React.useEffect(
         () => {
-            if (!pointerPosition || !useSnapLines) return;
+            if (pointerPosition && useSnapLines) return;
             const svgViewRange = getViewpointSize(svgViewBoxMin, svgViewBoxZoom, width, height);
             const nodesInViewRange = findNodesInRectangle(
                 graph.current,
@@ -124,9 +124,9 @@ const SvgCanvas = () => {
 
         setActiveSnapLines([]);
         setActiveSnapPoint(undefined);
-        setPointerPosition({ x, y });
+//        setPointerPosition({ x, y });
 
-        dispatch(setActive(node));
+//        dispatch(setActive(node));
 
         if (!e.shiftKey) {
             // no shift key -> non multiple selection case
@@ -151,7 +151,7 @@ const SvgCanvas = () => {
     const handlePointerMove = useEvent((node: StnId | MiscNodeId, e: React.PointerEvent<SVGElement>) => {
         const { x, y } = getMousePosition(e);
 
-        if (mode === 'free' && active === node) {
+/*         if (mode === 'free' && active === node) {
             if (!e.altKey && useSnapLines) {
                 // node start position (fromX, fromY)
                 const fromX = graph.current.getNodeAttribute(node, 'x');
@@ -288,7 +288,8 @@ const SvgCanvas = () => {
             }
             dispatch(refreshNodesThunk());
             dispatch(refreshEdgesThunk());
-        } else if (mode.startsWith('line')) {
+        } else  */
+		if (mode.startsWith('line')) {
             setPointerOffset({
                 dx: ((pointerPosition!.x - x) * svgViewBoxZoom) / 100,
                 dy: ((pointerPosition!.y - y) * svgViewBoxZoom) / 100,
@@ -337,25 +338,11 @@ const SvgCanvas = () => {
             });
             dispatch(refreshEdgesThunk());
             dispatch(saveGraph(graph.current.export()));
-        } else if (mode === 'free') {
-            if (active) {
-                // the node is pointed down before
-                // check the offset and if it's not 0, it must be a click not move
-                const { x, y } = getMousePosition(e);
-                if (pointerPosition!.x - x === 0 && pointerPosition!.y - y === 0) {
-                    // no-op for click as the node is already added in pointer down
-                } else {
-                    // its a moving node operation, save the final coordinate
-                    dispatch(saveGraph(graph.current.export()));
-                }
-            } else {
-                // no-op for a new node is just placed, already added to selected in pointer down
-            }
         }
         setActiveSnapLines([]);
         setActiveSnapPoint(undefined);
         setPointerPosition(undefined);
-        dispatch(setActive(undefined));
+//        dispatch(setActive(undefined));
         // console.log('up ', graph.current.getNodeAttributes(node));
     });
     const handleEdgePointerDown = useEvent((edge: LineId, e: React.PointerEvent<SVGElement>) => {
@@ -443,6 +430,7 @@ const SvgCanvas = () => {
                 handlePointerUp={handlePointerUp}
                 handleEdgePointerDown={handleEdgePointerDown}
             />
+            /*
             {mode.startsWith('line') && active && active !== 'background' && (
                 <SingleColor
                     id="line_create_in_progress___no_use"
@@ -472,6 +460,7 @@ const SvgCanvas = () => {
                         strokeWidth={svgViewBoxZoom / 75}
                     />
                 ))}
+            */
             {activeSnapPoint && <SnapPointGuideLines activeSnapPoint={activeSnapPoint} />}
         </>
     );

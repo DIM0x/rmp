@@ -63,6 +63,8 @@ const selectIcon = (
 const EXPAND_ANIMATION_DURATION = 0.3; // in second
 
 const ToolsPanel = () => {
+    const shouldRender = false;
+    if (!shouldRender) return null;
     const { i18n, t } = useTranslation();
     const dispatch = useRootDispatch();
     const { activeSubscriptions } = useRootSelector(state => state.account);

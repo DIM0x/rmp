@@ -36,7 +36,7 @@ const DetailsPanel = () => {
     const isMasterDisabled = !activeSubscriptions.RMP_CLOUD && masterNodesCount + 1 > MAX_MASTER_NODE_FREE;
 
     const handleClose = () => dispatch(clearSelected());
-    const handleDuplicate = (selectedFirst: string) => {
+/*    const handleDuplicate = (selectedFirst: string) => {
         const allAttr = structuredClone(graph.current.getNodeAttributes(selectedFirst));
         allAttr.x += 50;
         allAttr.y += 50;
@@ -57,7 +57,7 @@ const DetailsPanel = () => {
         });
         hardRefresh();
     };
-
+*/
     return (
         <RmgSidePanel
             isOpen={selected.size > 0 && !mode.startsWith('line') && !active}
@@ -83,7 +83,7 @@ const DetailsPanel = () => {
                     </Box>
                 )}
             </RmgSidePanelBody>
-            <RmgSidePanelFooter>
+{/*            <RmgSidePanelFooter>
                 <HStack>
                     {selected.size === 1 && graph.current.hasNode(selectedFirst) && (
                         <Button
@@ -106,6 +106,7 @@ const DetailsPanel = () => {
                     </Button>
                 </HStack>
             </RmgSidePanelFooter>
+*/}
         </RmgSidePanel>
     );
 };
