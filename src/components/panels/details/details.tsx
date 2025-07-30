@@ -67,11 +67,6 @@ const DetailsPanel = () => {
         >
             <RmgSidePanelHeader onClose={handleClose}>{t('panel.details.header')}</RmgSidePanelHeader>
             <RmgSidePanelBody>
-                <InfoSection />
-
-                {selected.size === 1 && graph.current.hasNode(selectedFirst) && <NodePositionSection />}
-                {selected.size === 1 && graph.current.hasEdge(selectedFirst) && <LineExtremitiesSection />}
-
                 {selected.size === 1 && (
                     <Box p={1}>
                         <Heading as="h5" size="sm">
@@ -79,9 +74,15 @@ const DetailsPanel = () => {
                         </Heading>
 
                         {window.graph.hasNode(selectedFirst) && <NodeSpecificAttributes />}
-                        {window.graph.hasEdge(selectedFirst) && <LineSpecificAttributes />}
+                        {/*window.graph.hasEdge(selectedFirst) && <LineSpecificAttributes />*/}
                     </Box>
                 )}
+
+                {selected.size === 1 && graph.current.hasEdge(selectedFirst) && <LineExtremitiesSection />}
+                <InfoSection />
+				{/*
+                {selected.size === 1 && graph.current.hasNode(selectedFirst) && <NodePositionSection />}
+                */}
             </RmgSidePanelBody>
 {/*            <RmgSidePanelFooter>
                 <HStack>

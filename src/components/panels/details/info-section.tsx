@@ -130,7 +130,7 @@ export default function InfoSection() {
             </Heading>
 
             <RmgFields fields={fields} minW={130} />
-
+{/*
             {selected.size === 1 &&
                 selectedFirst!.startsWith('stn') &&
                 graph.current.hasNode(selectedFirst) &&
@@ -143,6 +143,7 @@ export default function InfoSection() {
                 graph.current.getEdgeAttribute(selectedFirst, 'style') in lineStyles && <LineTypeSection />}
 
             {selected.size > 1 && <InfoMultipleSection />}
+*/}
         </Box>
     );
 }
