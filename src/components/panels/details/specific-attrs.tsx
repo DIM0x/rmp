@@ -44,6 +44,10 @@ export const NodeSpecificAttributes = () => {
 
     return (
         <>
+			<div style={{
+              pointerEvents: 'none',
+			  cursor: 'not-allowed',
+            }}>
             {AttrsComponent ? (
                 <AttrsComponent id={id} attrs={attrs} handleAttrsUpdate={handleAttrsUpdate} />
             ) : (
@@ -51,6 +55,7 @@ export const NodeSpecificAttributes = () => {
                     {t('panel.details.unknown.error', { category: t('panel.details.unknown.node') })}
                 </Text>
             )}
+			</div>
 
             {imageIndices.filter(i => !missingImages.has(i)).length > 0 && (
                 <Box mt={4}>
@@ -59,7 +64,8 @@ export const NodeSpecificAttributes = () => {
                     </Heading>
 
                     <Box display="flex" flexDirection="column" gap={2}>
-                        {imageIndices.map(index => (
+                        {imageIndices.map(
+                            index => (
                             !missingImages.has(index) && (
                                 <Box 
                                     key={index}
