@@ -19,6 +19,9 @@ export const NodeSpecificAttributes = () => {
     const { t } = useTranslation();
     const [id] = selected;
     const [missingImages, setMissingImages] = React.useState<Set<number>>(new Set());
+    React.useEffect(() => {
+        setMissingImages(new Set());
+    }, [id]);
 
     const type = window.graph.getNodeAttribute(id, 'type');
     const AttrsComponent = type in nodes && (nodes[type].attrsComponent as React.FC<AttrsProps<any>>);
@@ -37,7 +40,7 @@ export const NodeSpecificAttributes = () => {
     const handleImageError = (index: number) => {
         setMissingImages(prev => new Set(prev).add(index));
     };
-    const imageIndices = Array.from({ length: 10 }, (_, i) => i + 1);
+    const imageIndices = Array.from({ length: 5 }, (_, i) => i + 1); //这里修改最多支持的图片数量
 
     return (
         <>
